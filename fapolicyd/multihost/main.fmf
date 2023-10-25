@@ -1,0 +1,29 @@
+summary: Multihost fapolicyd scenario for test execution of trusted objects
+description: |
+  Running two systems, first is prepared for ansible controller, second is use 
+  for fapolicyd. 
+  Run fapolicyd system role which setup fapolicyd role on second system.
+  Execute trusted and untrusted binaries and verify correctnes of fapolicyd role setup.
+  Provide in several iterations, where removing and adding binaries as trusted files.
+contact: Patrik Koncity <pkoncity@redhat.com>
+component:
+  - fapolicyd
+test: ./runtest.sh
+framework: beakerlib
+tag:
+  - multihost
+require:
+  - url: https://github.com/RedHat-SP-Security/keylime-tests
+    ref: rhel-9-main
+    name: /Library/sync
+  - url: https://github.com/RedHat-SP-Security/tests
+    ref: master
+    name: /fapolicyd/Library/common
+  - ansible-core
+  - rhel-system-roles
+  - yum
+  - gcc
+  - library(ControlFlow/Cleanup)
+  - library(distribution/testUser)
+duration: 10m
+enabled: true
