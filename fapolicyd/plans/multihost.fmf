@@ -1,0 +1,36 @@
+
+
+
+summary: fapolicyd ansible role
+
+provision:
+  - name: controller
+    role: controller
+    how: connect
+    guest: 10.0.185.203
+    password: toor
+  - name: fapolicyd_client
+    role: fapolicyd_client
+    how: connect
+    guest: 10.0.187.102
+    password: toor
+
+
+discover:
+  - name: test
+    how: fmf
+    where:
+      - fapolicyd_client
+      - controller
+    test:
+      - /multihost
+
+execute:
+  how: tmt
+
+adjust:
+  - when: distro == centos-stream-9
+    prepare+:
+      - how: shell
+        script:
+          - dnf -y install epel-release epel-next-release
